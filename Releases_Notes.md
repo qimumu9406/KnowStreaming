@@ -1,11 +1,290 @@
 
+## v3.1.0
+
+**Bug修复**
+- 修复重置 Group Offset 的提示信息中，缺少Dead状态也可进行重置的描述；
+- 修复新建 Topic 后，立即查看 Topic Messages 信息时，会提示 Topic 不存在的问题；
+- 修复副本变更时，优先副本选举未被正常处罚执行的问题；
+- 修复 git 目录不存在时，打包不能正常进行的问题；
+- 修复 KRaft 模式的 Kafka 集群，JMX PORT 显示 -1 的问题；
+
+
+**体验优化**
+- 优化Cluster、Broker、Topic、Group的健康分为健康状态；
+- 去除健康巡检配置中的权重信息；
+- 错误提示页面展示优化；
+- 前端打包编译依赖默认使用 taobao 镜像；
+- 重新设计优化导航栏的 icon ；
+
+
+**新增**
+- 个人头像下拉信息中，新增产品版本信息；
+- 多集群列表页面，新增集群健康状态分布信息；
+
+
+**Kafka ZK 部分 (v3.1.0版本正式发布)**
+- 新增 ZK 集群的指标大盘信息；
+- 新增 ZK 集群的服务状态概览信息；
+- 新增 ZK 集群的服务节点列表信息；
+- 新增 Kafka 在 ZK 的存储数据查看功能；
+- 新增 ZK 的健康巡检及健康状态计算；
+
+
+
 ---
 
-![kafka-manager-logo](./docs/assets/images/common/logo_name.png)
 
-**一站式`Apache Kafka`集群指标监控与运维管控平台**
+## v3.0.1
 
---- 
+**Bug修复**
+- 修复重置 Group Offset 时，提示信息中缺少 Dead 状态也可进行重置的信息；
+- 修复 Ldap 某个属性不存在时，会直接抛出空指针导致登陆失败的问题；
+- 修复集群 Topic 列表页，健康分详情信息中，检查时间展示错误的问题；
+- 修复更新健康检查结果时，出现死锁的问题；
+- 修复 Replica 索引模版错误的问题；
+- 修复 FAQ 文档中的错误链接；
+- 修复 Broker 的 TopN 指标不存在时，页面数据不展示的问题；
+- 修复 Group 详情页，图表时间范围选择不生效的问题；
+
+
+**体验优化**
+- 集群 Group 列表按照 Group 维度进行展示；
+- 优化避免因 ES 中该指标不存在，导致日志中出现大量空指针的问题；
+- 优化全局 Message & Notification 展示效果；
+- 优化 Topic 扩分区名称 & 描述展示；
+
+
+**新增**
+- Broker 列表页面，新增 JMX 是否成功连接的信息；
+
+
+**ZK 部分(未完全发布)**
+- 后端补充 Kafka ZK 指标采集，Kafka ZK 信息获取相关功能；
+- 增加本地缓存，避免同一采集周期内 ZK 指标重复采集；
+- 增加 ZK 节点采集失败跳过策略，避免不断对存在问题的节点不断尝试；
+- 修复 zkAvgLatency 指标转 Long 时抛出异常问题；
+- 修复 ks_km_zookeeper 表中，role 字段类型错误问题；
+
+---
+
+## v3.0.0
+
+**Bug修复**
+- 修复 Group 指标防重复采集不生效问题
+- 修复自动创建 ES 索引模版失败问题
+- 修复 Group+Topic 列表中存在已删除Topic的问题
+- 修复使用 MySQL-8 ，因兼容问题， start_time 信息为 NULL 时，会导致创建任务失败的问题
+- 修复 Group 信息表更新时，出现死锁的问题
+- 修复图表补点逻辑与图表时间范围不适配的问题
+
+
+**体验优化**
+- 按照资源类别，拆分健康巡检任务
+- 优化 Group 详情页的指标为实时获取
+- 图表拖拽排序支持用户级存储
+- 多集群列表 ZK 信息展示兼容无 ZK 情况
+- Topic 详情消息预览支持复制功能
+- 部分内容大数字支持千位分割符展示
+
+
+**新增**
+- 集群信息中，新增 Zookeeper 客户端配置字段
+- 集群信息中，新增 Kafka 集群运行模式字段
+- 新增 docker-compose 的部署方式
+
+---
+
+## v3.0.0-beta.3
+
+**文档**
+- FAQ 补充权限识别失败问题的说明
+- 同步更新文档，保持与官网一致
+
+
+**Bug修复**
+- Offset 信息获取时，过滤掉无 Leader 的分区
+- 升级 oshi-core 版本至 5.6.1 版本，修复 Windows 系统获取系统指标失败问题
+- 修复 JMX 连接被关闭后，未进行重建的问题
+- 修复因 DB 中 Broker 信息不存在导致 TotalLogSize 指标获取时抛空指针问题
+- 修复 dml-logi.sql 中，SQL 注释错误的问题
+- 修复 startup.sh 中，识别操作系统类型错误的问题
+- 修复配置管理页面删除配置失败的问题
+- 修复系统管理应用文件引用路径
+- 修复 Topic Messages 详情提示信息点击跳转 404 的问题
+- 修复扩副本时，当前副本数不显示问题
+
+
+**体验优化**
+- Topic-Messages 页面，增加返回数据的排序以及按照Earliest/Latest的获取方式
+- 优化 GroupOffsetResetEnum 类名为 OffsetTypeEnum，使得类名含义更准确
+- 移动 KafkaZKDAO 类，及 Kafka Znode 实体类的位置，使得 Kafka Zookeeper DAO 更加内聚及便于识别
+- 后端补充 Overview 页面指标排序的功能
+- 前端 Webpack 配置优化
+- Cluster Overview 图表取消放大展示功能
+- 列表页增加手动刷新功能
+- 接入/编辑集群，优化 JMX-PORT，Version 信息的回显，优化JMX信息的展示
+- 提高登录页面图片展示清晰度
+- 部分样式和文案优化
+
+---
+
+## v3.0.0-beta.2
+
+**文档**
+- 新增登录系统对接文档
+- 优化前端工程打包构建部分文档说明
+- FAQ补充KnowStreaming连接特定JMX IP的说明
+
+
+**Bug修复**
+- 修复logi_security_oplog表字段过短，导致删除Topic等操作无法记录的问题
+- 修复ES查询时，抛java.lang.NumberFormatException: For input string: "{"value":0,"relation":"eq"}" 问题
+- 修复LogStartOffset和LogEndOffset指标单位错误问题
+- 修复进行副本变更时，旧副本数为NULL的问题
+- 修复集群Group列表，在第二页搜索时，搜索时返回的分页信息错误问题
+- 修复重置Offset时，返回的错误信息提示不一致的问题
+- 修复集群查看，系统查看，LoadRebalance等页面权限点缺失问题
+- 修复查询不存在的Topic时，错误信息提示不明显的问题
+- 修复Windows用户打包前端工程报错的问题
+- package-lock.json锁定前端依赖版本号，修复因依赖自动升级导致打包失败等问题
+- 系统管理子应用，补充后端返回的Code码拦截，解决后端接口返回报错不展示的问题
+- 修复用户登出后，依旧可以访问系统的问题
+- 修复巡检任务配置时，数值显示错误的问题
+- 修复Broker/Topic Overview 图表和图表详情问题
+- 修复Job扩缩副本任务明细数据错误的问题
+- 修复重置Offset时，分区ID，Offset数值无限制问题
+- 修复扩缩/迁移副本时，无法选中Kafka系统Topic的问题
+- 修复Topic的Config页面，编辑表单时不能正确回显当前值的问题
+- 修复Broker Card返回数据后依旧展示加载态的问题
+
+
+
+**体验优化**
+- 优化默认用户密码为 admin/admin
+- 缩短新增集群后，集群信息加载的耗时
+- 集群Broker列表，增加Controller角色信息
+- 副本变更任务结束后，增加进行优先副本选举的操作
+- Task模块任务分为Metrics、Common、Metadata三类任务，每类任务配备独立线程池，减少对Job模块的线程池，以及不同类任务之间的相互影响
+- 删除代码中存在的多余无用文件
+- 自动新增ES索引模版及近7天索引，减少用户搭建时需要做的事项
+- 优化前端工程打包流程
+- 优化登录页文案，页面左侧栏内容，单集群详情样式，Topic列表趋势图等
+- 首次进入Broker/Topic图表详情时，进行预缓存数据从而优化体验
+- 优化Topic详情Partition Tab的展示
+- 多集群列表页增加编辑功能
+- 优化副本变更时，迁移时间支持分钟级别粒度
+- logi-security版本升级至2.10.13
+- logi-elasticsearch-client版本升级至1.0.24
+
+
+**能力提升**
+- 支持Ldap登录认证
+
+---
+
+## v3.0.0-beta.1
+
+**文档**
+- 新增Task模块说明文档
+- FAQ补充 `Specified key was too long; max key length is 767 bytes ` 错误说明
+- FAQ补充 `出现ESIndexNotFoundException报错` 错误说明
+
+
+**Bug修复**
+- 修复 Consumer 点击 Stop 未停止检索的问题
+- 修复创建/编辑角色权限报错问题
+- 修复多集群管理/单集群详情均衡卡片状态错误问题
+- 修复版本列表未排序问题
+- 修复Raft集群Controller信息不断记录问题
+- 修复部分版本消费组描述信息获取失败问题
+- 修复分区Offset获取失败的日志中，缺少Topic名称信息问题
+- 修复GitHub图地址错误，及图裂问题
+- 修复Broker默认使用的地址和注释不一致问题
+- 修复 Consumer 列表分页不生效问题
+- 修复操作记录表operation_methods字段缺少默认值问题
+- 修复集群均衡表中move_broker_list字段无效的问题
+- 修复KafkaUser、KafkaACL信息获取时，日志一直重复提示不支持问题
+- 修复指标缺失时，曲线出现掉底的问题
+
+
+**体验优化**
+- 优化前端构建时间和打包体积，增加依赖打包的分包策略
+- 优化产品样式和文案展示
+- 优化ES客户端数为可配置
+- 优化日志中大量出现的MySQL Key冲突日志
+
+
+**能力提升**
+- 增加周期任务，用于主动创建缺少的ES模版及索引的能力，减少额外的脚本操作
+- 增加JMX连接的Broker地址可选择的能力
+
+---
+
+## v3.0.0-beta.0
+
+**1、多集群管理**
+
+- 增加健康监测体系、关键组件&指标 GUI 展示
+- 增加 2.8.x 以上 Kafka 集群接入，覆盖 0.10.x-3.x
+- 删除逻辑集群、共享集群、Region 概念
+
+**2、Cluster 管理**
+
+- 增加集群概览信息、集群配置变更记录
+- 增加 Cluster 健康分，健康检查规则支持自定义配置
+- 增加 Cluster 关键指标统计和 GUI 展示，支持自定义配置
+- 增加 Cluster 层 I/O、Disk 的 Load Reblance 功能，支持定时均衡任务（企业版）
+- 删除限流、鉴权功能
+- 删除 APPID 概念
+
+**3、Broker 管理**
+
+- 增加 Broker 健康分
+- 增加 Broker 关键指标统计和 GUI 展示，支持自定义配置
+- 增加 Broker 参数配置功能，需重启生效
+- 增加 Controller 变更记录
+- 增加 Broker Datalogs 记录
+- 删除 Leader Rebalance 功能
+- 删除 Broker 优先副本选举
+
+**4、Topic 管理**
+
+- 增加 Topic 健康分
+- 增加 Topic 关键指标统计和 GUI 展示，支持自定义配置
+- 增加 Topic 参数配置功能，可实时生效
+- 增加 Topic 批量迁移、Topic 批量扩缩副本功能
+- 增加查看系统 Topic 功能
+- 优化 Partition 分布的 GUI 展示
+- 优化 Topic Message 数据采样
+- 删除 Topic 过期概念
+- 删除 Topic 申请配额功能
+
+**5、Consumer 管理**
+
+- 优化了 ConsumerGroup 展示形式，增加 Consumer Lag 的 GUI 展示
+
+**6、ACL 管理**
+
+- 增加原生 ACL GUI 配置功能，可配置生产、消费、自定义多种组合权限
+- 增加 KafkaUser 功能，可自定义新增 KafkaUser
+
+**7、消息测试（企业版）**
+
+- 增加生产者消息模拟器，支持 Data、Flow、Header、Options 自定义配置（企业版）
+- 增加消费者消息模拟器，支持 Data、Flow、Header、Options 自定义配置（企业版）
+
+**8、Job**
+
+- 优化 Job 模块，支持任务进度管理
+
+**9、系统管理**
+
+- 优化用户、角色管理体系，支持自定义角色配置页面及操作权限
+- 优化审计日志信息
+- 删除多租户体系
+- 删除工单流程
+
+---
 
 ## v2.6.0
 
@@ -40,6 +319,16 @@
 - 修复Dockerfile执行时提示缺少application.yml文件的问题
 - 修复逻辑集群更新时，会报空指针的问题
 
+
+## v2.5.0
+
+版本上线时间：2021-07-10
+
+### 体验优化
+- 更改产品名为LogiKM
+- 更新产品图标
+
+
 ## v2.4.1+
 
 版本上线时间：2021-05-21
@@ -49,7 +338,7 @@
 - 增加接口调用可绕过登录的功能(v2.4.1)
 
 ### 体验优化
-- tomcat 版本提升至8.5.66(v2.4.2)
+- Tomcat 版本提升至8.5.66(v2.4.2)
 - op接口优化，拆分util接口为topic、leader两类接口(v2.4.1)
 - 简化Gateway配置的Key长度(v2.4.1)
 

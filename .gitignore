@@ -105,10 +105,12 @@ node_modules/*
 workspace.xml
 /output/*
 .gitversion
-node_modules/*
 out/*
 dist/
 dist/*
-kafka-manager-web/src/main/resources/templates/
-.DS_Store
-kafka-manager-console/package-lock.json
+km-rest/src/main/resources/templates/
+*dependency-reduced-pom*
+#filter flattened xml
+*/.flattened-pom.xml
+.flattened-pom.xml
+*/*/.flattened-pom.xml
